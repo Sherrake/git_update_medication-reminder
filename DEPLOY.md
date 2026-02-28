@@ -71,9 +71,20 @@ git push
 ## 二、Firebase 配置（必做，否则无法登录与同步）
 
 1. 打开 [Firebase 控制台](https://console.firebase.google.com)，创建项目。
-2. 添加「网页」应用，记下 `apiKey`、`authDomain`、`projectId` 等，填入 **firebase-config.js**。
-3. 启用 **Authentication**：左侧 **Build → Authentication** → **Get started** → **Sign-in method** 中启用 **电子邮件/密码**（Email/Password）。
-4. 开通 **Firestore Database**：**Build → Firestore Database** → 创建数据库（测试模式即可）。在 **规则** 中改为（仅允许已登录用户读写自己的数据）：
+
+2. **添加「网页」应用**，记下 `apiKey`、`authDomain`、`projectId` 等，填入 **firebase-config.js**。
+   - 在**项目概览**页：点击「托管 Web 应用」卡片，或点击左上角项目名旁的 **齿轮图标** 进入 **项目设置**。
+   - 在项目设置里找到 **「您的应用」**，点击 **「添加应用」** 或网页图标 **`</>`**，选择 **「网页」**。
+   - 按提示给应用起个昵称（可留空），不勾选 Firebase Hosting 也可，点 **「注册应用」**。
+   - 会显示一段配置代码，记下其中的 `apiKey`、`authDomain`、`projectId`、`storageBucket`、`messagingSenderId`、`appId`，复制到本项目的 **firebase-config.js** 中对应位置。
+
+3. **启用 Authentication**：
+   - 左侧边栏点击 **「构建」** 旁的 **下拉箭头** 展开菜单。
+   - 点击 **「Authentication」**（身份验证）→ **「开始使用」**（Get started）→ 在 **「Sign-in method」/「登录方式」** 里启用 **「电子邮件/密码」**（Email/Password），保存。
+
+4. **开通 Firestore Database**：
+   - 左侧 **「构建」** 下点击 **「Firestore Database」** → **「创建数据库」**，选 **测试模式** 即可（后面会改规则）。
+   - 创建完成后，在 Firestore 页签里打开 **「规则」**，将规则替换为下面一段（仅允许已登录用户读写自己的数据）：
    ```
    rules_version = '2';
    service cloud.firestore {
