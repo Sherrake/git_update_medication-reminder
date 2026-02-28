@@ -9,7 +9,7 @@ var firebaseConfig = {
   appId: "1:105403173862:web:61a17132806591ddcfe427"
 };
 
-if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "AIzaSyDLPpkdYMyU_mpmkjWUd1S4HiYEMPxIwFs") {
+if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
   firebase.initializeApp(firebaseConfig);
   var db = firebase.firestore();
   // 保持登录状态（关闭网页后再打开仍为已登录）
