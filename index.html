@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f0f2f5" />
+  <meta name="description" content="吃药提醒 - 记录服药计划，到点提醒" />
+  <title>吃药提醒</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='8' y='4' width='16' height='24' rx='4' fill='%234a90e2'/><rect x='14' y='10' width='4' height='12' fill='%23fff' opacity='0.9'/></svg>" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app" id="appMain" hidden>
+    <header class="header">
+      <h1>吃药提醒</h1>
+      <p class="subtitle">按时服药，健康常伴</p>
+      <p class="user-hint">已登录：<span id="userEmailDisplay"></span> <button type="button" class="btn btn-text" id="btnLogout">退出登录</button></p>
+      <button type="button" class="btn btn-allow-notify" id="btnNotify" hidden>允许提醒通知</button>
+      <p class="notify-status" id="notifyStatus" hidden></p>
+    </header>
+
+    <main class="main">
+      <section class="today-section card">
+        <h2>今日服药</h2>
+        <div class="date-display" id="todayDate"></div>
+        <ul class="schedule-list" id="scheduleList"></ul>
+        <p class="empty-tip" id="emptyTip">暂无今日服药计划，请先添加药物与服药时间。</p>
+      </section>
+
+      <section class="medications-section card">
+        <div class="section-head">
+          <h2>我的药物</h2>
+          <button type="button" class="btn btn-primary" id="btnAddMed">+ 添加药物</button>
+        </div>
+        <ul class="med-list" id="medList"></ul>
+      </section>
+    </main>
+
+    <dialog class="modal" id="medModal">
+      <form class="modal-form" id="medForm">
+        <h3 id="modalTitle">添加药物</h3>
+        <input type="hidden" id="medId" />
+        <label>
+          <span>药物名称</span>
+          <input type="text" id="medName" required placeholder="如：维生素 C" />
+        </label>
+        <label>
+          <span>剂量/说明（选填）</span>
+          <input type="text" id="medDosage" placeholder="如：1 片，饭后" />
+        </label>
+        <label>
+          <span>每日服药时间</span>
+          <div class="time-inputs" id="timeInputs"></div>
+          <button type="button" class="btn btn-text" id="btnAddTime">+ 添加时间点</button>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="btnCancel">取消</button>
+          <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
+
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-card card">
+      <h2 id="authTitle">登录</h2>
+      <p class="auth-desc" id="authDesc">使用同一账号登录可同步全部药物信息，关闭网页后再次打开将保持登录。</p>
+      <form id="authForm">
+        <label>
+          <span>邮箱</span>
+          <input type="email" id="authEmail" required placeholder="your@email.com" />
+        </label>
+        <label>
+          <span>密码</span>
+          <input type="password" id="authPassword" required placeholder="至少 6 位" minlength="6" />
+        </label>
+        <p class="auth-error" id="authError"></p>
+        <div class="auth-actions">
+          <button type="submit" class="btn btn-primary" id="btnAuthSubmit">登录</button>
+          <button type="button" class="btn btn-ghost" id="btnAuthSwitch">没有账号？注册</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(function() {});
+    }
+  </script>
+</body>
+</html>
